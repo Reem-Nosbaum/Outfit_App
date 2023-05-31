@@ -64,14 +64,13 @@ const styles = StyleSheet.create({
 
   button: {
     position: 'absolute',
-    right: -30,
+    right: 10,
     top: 50,
     width: 50,
     height: 50,
     backgroundColor: '#7FFF00',
     borderRadius: 8,
     justifyContent: 'center',
-    // alignItems: 'center',    
 
   },
   buttonText: {
