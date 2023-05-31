@@ -1,10 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { View } from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
+import {NavigationContainer} from '@react-navigation/native';
 import Home from './screens/home';
+import SavedSets from './screens/savedSets'
+
+
+const Stack = createStackNavigator();
 
 
 export default function App() {
   return (
-    <Home/>
-  );
+    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name='Home' component={Home}/> 
+      <Stack.Screen name='SavedSets' component={SavedSets}/>
+    </Stack.Navigator>
+    </NavigationContainer>
+    );
 }

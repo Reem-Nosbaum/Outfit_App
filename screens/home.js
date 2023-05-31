@@ -3,12 +3,16 @@ import { StyleSheet, View, Text,TouchableOpacity, Image, Alert} from 'react-nati
 import { globalStyles } from '../styles/global';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
+
+  const pressHandler = () => {
+    navigation.navigate('SavedSets');
+  }
+
   return (
     <View style={globalStyles.container}>
-    <Text style={globalStyles.titleText}>Home Screen</Text>
     <Text style={globalStyles.titleText}>Pick a outfit</Text>
-    <CustomButton title="Saved Outfits" onPress={handlePress} />
+    <CustomButton title="Saved Outfits" onPress={pressHandler} />
     <View style={styles.imageStyle}>
       <Image source={require('../assets/shirt.png')} style={styles.imageShirt} />
     </View>
@@ -29,24 +33,24 @@ const CustomButton = ({ title, onPress }) => {
     </TouchableOpacity>
   );
 };
-
-const handlePress = () => {
-  Alert.alert('Button Pressed')}
   
 
 const styles = StyleSheet.create({
   imageShirt: {
     width: 160,
     height: 200,
+    flex: 1,
   },
   imagePants: {
     width: 220,
     height: 200,
+    flex: 1,
 
   },
   imageShoes: {
-    width: 150,
-    height: 150,
+    width: 165,
+    height: 130,
+    // flex: 1,
   },
 
   imageStyle: {
@@ -65,12 +69,13 @@ const styles = StyleSheet.create({
   button: {
     position: 'absolute',
     right: 10,
-    top: 50,
+    top: 10,
     width: 50,
     height: 50,
     backgroundColor: '#7FFF00',
     borderRadius: 8,
     justifyContent: 'center',
+    alignItems: 'center',    
 
   },
   buttonText: {
