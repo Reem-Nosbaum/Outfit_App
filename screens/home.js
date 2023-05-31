@@ -3,24 +3,46 @@ import { StyleSheet, View, Text,TouchableOpacity, Image, Alert} from 'react-nati
 import { globalStyles } from '../styles/global';
 
 
+
+
+
+
 export default function Home({ navigation }) {
 
   const pressHandler = () => {
     navigation.navigate('SavedSets');
   }
+  const shirtImagePress = () => {
+    navigation.navigate('Outfit');
+  };
+  const pantsImagePress = () => {
+    navigation.navigate('Outfit');
+  };
+  const shoesImagePress = () => {
+    navigation.navigate('Outfit');
+  };
+  
+  
+
 
   return (
     <View style={globalStyles.container}>
     <Text style={globalStyles.titleText}>Pick a outfit</Text>
     <CustomButton title="Saved Outfits" onPress={pressHandler} />
     <View style={styles.imageStyle}>
+      <TouchableOpacity onPress={shirtImagePress}>
       <Image source={require('../assets/shirt.png')} style={styles.imageShirt} />
+      </TouchableOpacity>
     </View>
     <View style={styles.imageStyle}>
+    <TouchableOpacity onPress={pantsImagePress}>
       <Image source={require('../assets/pants.png')} style={styles.imagePants} />
+      </TouchableOpacity>
     </View>
     <View style={styles.imageStyle}>
+    <TouchableOpacity onPress={shoesImagePress}>
       <Image source={require('../assets/shoes.png')} style={styles.imageShoes} />
+      </TouchableOpacity>
     </View>
       </View>
   );
@@ -33,6 +55,7 @@ const CustomButton = ({ title, onPress }) => {
     </TouchableOpacity>
   );
 };
+
   
 
 const styles = StyleSheet.create({
