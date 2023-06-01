@@ -1,11 +1,32 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { globalStyles } from '../styles/global';
+import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 
-export default function Outfit() {
+const Outfit = () => {
+  const [dataList, setDataList] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://run.mocky.io/v3/2d06d2c1-5a77-4ecd-843a-53247bcb0b94');
+      const data = await response.json();
+      setDataList(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <View style={globalStyles.container}>
-      <Text style={globalStyles.titleText}>Outfit Screen</Text>
+    <View>
+      {dataList.map((item, index) => (
+        <Text key={index}>
+          {item.id} - {item.type} - {item.color} - {item.size} - {item.brand}
+        </Text>
+      ))}
     </View>
   );
-}
+};
+
+export default Outfit;
