@@ -8,14 +8,15 @@ export default function Home({ navigation }) {
   };
 
   const navaigateFunc = (destination) => {
-    navigation.navigate('Outfit', { dest: destination });
+    navigation.navigate('Outfit', { dest: destination })
+    console.log(destination);
   };
 
   const dataImage = [
     {
       imagePath: require('../assets/shirt.png'),
       styleImagePath: 'imageShirt',
-      functionClick: () => navaigateFunc('shirts'),
+      functionClick: () => navaigateFunc('shirt'),
     },
     {
       imagePath: require('../assets/pants.png'),
