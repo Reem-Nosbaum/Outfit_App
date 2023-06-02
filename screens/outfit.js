@@ -3,9 +3,10 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react
 
 const Outfit = ({ route }) => {
   const [outfitData, setOutfitData] = useState([]);
-  const [filter, setFilter] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
 
-  const { dest } = route.params;
+  const { dest, image } = route.params;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,50 +25,67 @@ const Outfit = ({ route }) => {
     fetchData();
   }, [dest]);
 
-  const handleFilterChange = value => {
-    setFilter(value);
+  const handleSizeFilterChange = (size) => {
+    setSelectedSize(size);
   };
 
-  const filteredOutfitData = outfitData.filter(item =>
-    item.color.toLowerCase().includes(filter.toLowerCase())
-  );
+  const handleColorFilterChange = (color) => {
+    setSelectedColor(color);
+  };
 
-  
+  const filteredOutfitData = outfitData.filter(item => {
+    let isSizeMatched = true;
+    let isColorMatched = true;
+
+    if (selectedSize && item.size !== selectedSize) {
+      isSizeMatched = false;
+    }
+    if (selectedColor && item.color !== selectedColor) {
+      isColorMatched = false;
+    }
+
+    return isSizeMatched && isColorMatched;
+  });
+
+  const sizeOptions = dest === 'shirt' ? ['S', 'L', 'XL', 'XXL'] : [];
+  const colorOptions = ['black', 'white', 'red', 'green', 'pink'];
 
   return (
     <View style={styles.container}>
       <View style={styles.filterContainer}>
         <Text style={styles.filterLabel}>Filter By:</Text>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => handleFilterChange('black')}
-        >
-          <Text style={styles.filterButtonText}>Black</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => handleFilterChange('white')}
-        >
-          <Text style={styles.filterButtonText}>white</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => handleFilterChange('red')}
-        >
-        <Text style={styles.filterButtonText}>red</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => handleFilterChange('pink')}
-        >
-        <Text style={styles.filterButtonText}>pink</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.filterButton}
-          onPress={() => handleFilterChange('green')}
-        >
-        <Text style={styles.filterButtonText}>green</Text>
-        </TouchableOpacity>
+        {sizeOptions.length > 0 && (
+          <View style={styles.filterButtonsContainer}>
+            <Text>Size:</Text>
+            {sizeOptions.map(size => (
+              <TouchableOpacity
+                key={size}
+                style={[
+                  styles.filterButton,
+                  selectedSize === size && styles.filterButtonSelected
+                ]}
+                onPress={() => handleSizeFilterChange(size)}
+              >
+                <Text style={styles.filterButtonText}>{size}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        )}
+        <View style={styles.filterButtonsContainer}>
+          <Text>Color:</Text>
+          {colorOptions.map(color => (
+            <TouchableOpacity
+              key={color}
+              style={[
+                styles.filterButton,
+                selectedColor === color && styles.filterButtonSelected
+              ]}
+              onPress={() => handleColorFilterChange(color)}
+            >
+              <Text style={styles.filterButtonText}>{color}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
       <FlatList
         data={filteredOutfitData}
@@ -75,7 +93,7 @@ const Outfit = ({ route }) => {
         numColumns={2}
         renderItem={({ item }) => (
           <View style={styles.itemContainer}>
-            <Image source={require('../assets/shirt.png')} style={styles.itemImage} />
+            <Image source={image} style={styles.itemImage} />
             <Text>Type: {item.type}</Text>
             <Text>Color: {item.color}</Text>
             <Text>Size: {item.size}</Text>
@@ -93,11 +111,17 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   filterContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     marginBottom: 16,
   },
   filterLabel: {
-    marginRight: 8,
+    marginBottom: 8,
+    fontWeight: 'bold',
+  },
+  filterButtonsContainer: {
+    flexDirection: 'row',
+    marginBottom: 8,
+    alignItems: 'center',
   },
   filterButton: {
     marginRight: 8,
@@ -105,6 +129,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: '#ccc',
     borderRadius: 4,
+  },
+  filterButtonSelected: {
+    backgroundColor: '#333',
   },
   filterButtonText: {
     color: 'white',

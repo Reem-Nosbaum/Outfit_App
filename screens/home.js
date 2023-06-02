@@ -7,29 +7,34 @@ export default function Home({ navigation }) {
     navigation.navigate('SavedSets');
   };
 
-  const navaigateFunc = (destination) => {
-    navigation.navigate('Outfit', { dest: destination })
+  const navaigateFunc = (destination, imagePath) => {
+    navigation.navigate('Outfit', { dest: destination, image: imagePath });
     console.log(destination);
   };
 
+  
+
   const dataImage = [
     {
+      type: 'shirt',
       imagePath: require('../assets/shirt.png'),
       styleImagePath: 'imageShirt',
-      functionClick: () => navaigateFunc('shirt'),
+      functionClick: () => navaigateFunc('shirt', require('../assets/shirt.png')),
     },
     {
+      type: 'pants',
       imagePath: require('../assets/pants.png'),
       styleImagePath: 'imagePants',
-      functionClick: () => navaigateFunc('pants'),
+      functionClick: () => navaigateFunc('pants', require('../assets/pants.png')),
     },
     {
+      type: 'shoes',
       imagePath: require('../assets/shoes.png'),
       styleImagePath: 'imageShoes',
-      functionClick: () => navaigateFunc('shoes'),
+      functionClick: () => navaigateFunc('shoes', require('../assets/shoes.png')),
     },
   ];
-
+  
   const renderItemImage = ({ item }) => {
     const style = styles[item.styleImagePath];
 
