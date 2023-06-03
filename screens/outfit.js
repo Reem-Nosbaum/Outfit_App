@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import { globalStyles } from '../styles/global';
 
 const Outfit = ({ route }) => {
   const [outfitData, setOutfitData] = useState([]);
@@ -47,14 +48,17 @@ const Outfit = ({ route }) => {
     return isSizeMatched && isColorMatched;
   });
 
-  const sizeOptions = dest === 'shirt' ? ['S', 'L', 'XL', 'XXL'] : [];
+  const sizeOptions = dest === 'shirt' ? ['S', 'L', 'XL', 'XXL'] : dest === 'pants' ? Array.from({ length: 19 }, (_, index) => Number(index + 30)) : dest === 'shoes' ? Array.from({ length: 11 }, (_, index) => Number(index + 36)) : [];
+
   const colorOptions = ['black', 'white', 'red', 'green', 'pink'];
+  
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <View style={styles.filterContainer}>
         <Text style={styles.filterLabel}>Filter By:</Text>
         {sizeOptions.length > 0 && (
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <View style={styles.filterButtonsContainer}>
             <Text>Size:</Text>
             {sizeOptions.map(size => (
@@ -70,6 +74,7 @@ const Outfit = ({ route }) => {
               </TouchableOpacity>
             ))}
           </View>
+          </ScrollView>
         )}
         <View style={styles.filterButtonsContainer}>
           <Text>Color:</Text>
