@@ -7,14 +7,38 @@ export default function Outfit({ route, navigation }) {
   const [outfitData, setOutfitData] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
+  const [image, setImage] = useState(null);
+  const [nextPage, setNextPage] = useState(null);
+
 
   const handleItemPress = (item) => {
-    navigation.navigate('SavedSets', { selectedItem: item });
-    console.log(item)
+    navigation.navigate('Outfit', { dest: nextPage});
   };
-  const { dest, image } = route.params
+
+  const { dest } = route.params
+
+  console.log(route.params)
 
   useEffect(() => {
+    switch (route.params.dest) {
+      case 'shirt': {
+        setImage(require('../assets/shirt.png'))
+      setNextPage('pants')
+      break;
+      }
+      case 'pants': {
+        setImage(require('../assets/pants.png'))
+      setNextPage('shoes')
+      break;
+      }
+      case 'shoes': {
+        setImage(require('../assets/shoes.png'))
+      setNextPage('shirt')
+      break;
+      }
+      default:
+        break;
+    }
     const fetchData = async () => {
       try {
         const response = await fetch(
