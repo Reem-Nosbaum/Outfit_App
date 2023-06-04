@@ -9,7 +9,6 @@ export default function Home({ navigation }) {
 
   const navaigateFunc = (destination, imagePath) => {
     navigation.navigate('Outfit', { dest: destination, image: imagePath });
-    console.log(destination);
   };
 
   

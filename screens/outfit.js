@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { globalStyles } from '../styles/global';
 
-const Outfit = ({ route }) => {
+export default function Outfit({ route, navigation }) {
+
   const [outfitData, setOutfitData] = useState([]);
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
 
-  const { dest, image } = route.params;
+  const handleItemPress = (item) => {
+    navigation.navigate('SavedSets', { selectedItem: item });
+    console.log(item)
+  };
+  const { dest, image } = route.params
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +30,8 @@ const Outfit = ({ route }) => {
 
     fetchData();
   }, [dest]);
+
+
 
   const handleSizeFilterChange = (size) => {
     setSelectedSize(size);
@@ -93,22 +100,23 @@ const Outfit = ({ route }) => {
         </View>
       </View>
       <FlatList
-        data={filteredOutfitData}
-        keyExtractor={item => item.id.toString()}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
+      data={filteredOutfitData}
+      keyExtractor={item => item.id.toString()}
+      numColumns={2}
+      renderItem={({ item }) => (
+        <View style={styles.itemContainer}>
+          <TouchableOpacity onPress={() => handleItemPress(item)}>
             <Image source={image} style={styles.itemImage} />
-            <Text>Type: {item.type}</Text>
-            <Text>Color: {item.color}</Text>
-            <Text>Size: {item.size}</Text>
-            <Text>Brand: {item.brand}</Text>
-          </View>
-        )}
-      />
-    </View>
-  );
-};
+          </TouchableOpacity>
+          <Text>Type: {item.type}</Text>
+          <Text>Color: {item.color}</Text>
+          <Text>Size: {item.size}</Text>
+          <Text>Brand: {item.brand}</Text>
+        </View>
+      )}
+    />
+  </View>
+);}
 
 const styles = StyleSheet.create({
   container: {
@@ -152,5 +160,3 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
 });
-
-export default Outfit;
