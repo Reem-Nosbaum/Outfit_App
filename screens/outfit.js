@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
 import { globalStyles } from '../styles/global';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Outfit({ route, navigation }) {
 
@@ -10,14 +11,42 @@ export default function Outfit({ route, navigation }) {
   const [image, setImage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
 
-
   const handleItemPress = (item) => {
-    navigation.navigate('Outfit', { dest: nextPage});
+    
+    const selectedItem = {
+      brand: item.brand,
+      color: item.color,
+      id: item.id,
+      size: item.size,
+      type: item.type,
+      
+    };
+  
+    AsyncStorage.getItem('savedSets')
+      .then((savedSetsData) => {
+        const savedSets = savedSetsData ? JSON.parse(savedSetsData) : [];
+        const existingSet = savedSets.find((set) => set.type === selectedItem.type);
+  
+        if (existingSet) {
+          existingSet.brand = selectedItem.brand;
+          existingSet.color = selectedItem.color;
+          existingSet.id = selectedItem.id;
+          existingSet.size = selectedItem.size;
+        } else {
+          savedSets.push(selectedItem);
+        }
+  
+        AsyncStorage.setItem('savedSets', JSON.stringify(savedSets));
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  
+    navigation.navigate('Outfit', { dest: nextPage });
   };
+        
 
   const { dest } = route.params
-
-  console.log(route.params)
 
   useEffect(() => {
     switch (route.params.dest) {
