@@ -25,16 +25,8 @@ export default function Outfit({ route, navigation }) {
     AsyncStorage.getItem('savedSets')
       .then((savedSetsData) => {
         const savedSets = savedSetsData ? JSON.parse(savedSetsData) : [];
-        const existingSet = savedSets.find((set) => set.type === selectedItem.type);
-  
-        if (existingSet) {
-          existingSet.brand = selectedItem.brand;
-          existingSet.color = selectedItem.color;
-          existingSet.id = selectedItem.id;
-          existingSet.size = selectedItem.size;
-        } else {
           savedSets.push(selectedItem);
-        }
+
   
         AsyncStorage.setItem('savedSets', JSON.stringify(savedSets));
       })
