@@ -1,4 +1,4 @@
-# Outfit Picker App
+# Outfit App
 
 The Outfit Picker App is a mobile application that allows users to pick and save different combinations of shirts, pants, and shoes to create outfits.
 
@@ -28,7 +28,7 @@ To run the app locally, follow these steps:
 
 3. Navigate to the project's root directory:
    ```bash
-   cd outfit-picker-app
+   cd Outfit_App
 
 4. Install the dependencies:
    ```bash
