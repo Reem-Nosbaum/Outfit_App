@@ -3,38 +3,40 @@ import { StyleSheet, View, Text, TouchableOpacity, Image, Alert, FlatList } from
 import { globalStyles } from '../styles/global';
 
 export default function Home({ navigation }) {
+  // Navigate to the SavedSets screen
   const pressHandler = () => {
     navigation.navigate('SavedSets');
   };
 
-  const navaigateFunc = (destination, imagePath) => {
+  // Navigate to the Outfit screen with the selected destination and image
+  const navigateFunc = (destination, imagePath) => {
     navigation.navigate('Outfit', { dest: destination, image: imagePath });
   };
 
-  
-
+  // Data for the different image types
   const dataImage = [
     {
       type: 'shirt',
       imagePath: require('../assets/shirt.png'),
       styleImagePath: 'imageShirt',
-      functionClick: () => navaigateFunc('shirt', require('../assets/shirt.png')),
+      functionClick: () => navigateFunc('shirt', require('../assets/shirt.png')),
     },
     {
       type: 'pants',
       imagePath: require('../assets/pants.png'),
       styleImagePath: 'imagePants',
-      functionClick: () => navaigateFunc('pants', require('../assets/pants.png')),
+      functionClick: () => navigateFunc('pants', require('../assets/pants.png')),
     },
     {
       type: 'shoes',
       imagePath: require('../assets/shoes.png'),
       styleImagePath: 'imageShoes',
-      functionClick: () => navaigateFunc('shoes', require('../assets/shoes.png')),
+      functionClick: () => navigateFunc('shoes', require('../assets/shoes.png')),
     },
   ];
-  
-  const renderItemImage = ({ item }) => {
+
+  // Render item for the FlatList
+  const renderItem = ({ item }) => {
     const style = styles[item.styleImagePath];
 
     return (
@@ -50,11 +52,12 @@ export default function Home({ navigation }) {
     <View style={globalStyles.container}>
       <Text style={globalStyles.titleText}>Pick an outfit</Text>
       <CustomButton title="Saved Outfits" onPress={pressHandler} />
-      <FlatList data={dataImage} renderItem={renderItemImage} />
+      <FlatList data={dataImage} renderItem={renderItem} />
     </View>
   );
 }
 
+// Custom Button component
 const CustomButton = ({ title, onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -64,7 +67,7 @@ const CustomButton = ({ title, onPress }) => {
 };
 
 const styles = StyleSheet.create({
-    imageShirt: {
+  imageShirt: {
     width: 160,
     height: 200,
     flex: 1,
@@ -73,14 +76,12 @@ const styles = StyleSheet.create({
     width: 220,
     height: 200,
     flex: 1,
-
   },
   imageShoes: {
     width: 160,
     height: 130,
     flex: 1,
   },
-
   imageStyle: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -90,10 +91,9 @@ const styles = StyleSheet.create({
     padding: 2,
     borderColor: '#333',
     borderWidth: 1,
-    borderStyle: "solid",
+    borderStyle: 'solid',
     borderRadius: 10,
   },
-
   button: {
     position: 'absolute',
     right: 10,
@@ -103,8 +103,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#7FFF00',
     borderRadius: 8,
     justifyContent: 'center',
-    alignItems: 'center',    
-
+    alignItems: 'center',
   },
   buttonText: {
     color: '#333',

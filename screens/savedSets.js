@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Button, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Button, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { globalStyles } from '../styles/global';
 
@@ -10,6 +10,7 @@ export default function SavedSets() {
     retrieveSavedSets();
   }, []);
 
+  // Retrieve saved sets from AsyncStorage
   const retrieveSavedSets = async () => {
     try {
       const savedSetsData = await AsyncStorage.getItem('savedSets');
@@ -23,6 +24,7 @@ export default function SavedSets() {
     }
   };
 
+  // Filter complete sets from the retrieved sets
   const filterCompleteSets = (sets) => {
     const completeSets = [];
     const setTypes = ['shirt', 'pants', 'shoes'];
@@ -40,6 +42,7 @@ export default function SavedSets() {
     return completeSets;
   };
 
+  // Delete a saved set at a given index
   const deleteSavedSet = async (index) => {
     const updatedSavedSets = [...savedSets];
     updatedSavedSets.splice(index, 1);
@@ -49,7 +52,6 @@ export default function SavedSets() {
 
   return (
     <View style={globalStyles.container}>
-      <Text style={globalStyles.titleText}>Saved Sets Screen</Text>
       <ScrollView style={styles.scrollView}>
         {savedSets.length > 0 ? (
           savedSets.map((set, index) => (
@@ -86,7 +88,6 @@ export default function SavedSets() {
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   scrollView: {
