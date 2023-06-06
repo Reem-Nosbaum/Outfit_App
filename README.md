@@ -32,11 +32,11 @@ To run the app locally, follow these steps:
 
 4. Install the dependencies:
    ```bash
-  npm install
+   npm install
 
 5. Start the development server:
    ```bash
-  npm start
+   npm start
 
 6. Follow the instructions in the console to launch the app on an emulator or physical device.
 
