@@ -27,12 +27,15 @@ To run the app locally, follow these steps:
    git clone https://github.com/Reem-Nosbaum/Outfit_App.git
 
 3. Navigate to the project's root directory:
+   ```bash
    cd outfit-picker-app
 
 4. Install the dependencies:
+   ```bash
   npm install
 
 5. Start the development server:
+   ```bash
   npm start
 
 6. Follow the instructions in the console to launch the app on an emulator or physical device.
